@@ -11,5 +11,5 @@ install:
   - pip install ansible
 script:
   - echo localhost > inventory
-  - ansible-playbook --syntax-check -i inventory Playbook.yml
-  - ansible-playbook -i inventory Playbook.yml --connection=local --sudo -vvvv
+  - ansible-playbook --syntax-check -i inventory Ansible/Playbook.yml
+  - ansible-playbook -i inventory Ansible/Playbook.yml --connection=local --sudo -vvvv
