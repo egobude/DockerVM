@@ -9,13 +9,13 @@
 
 - name: Install recommended extra packages for trusty 14.04
   apt:
-    pkg: '{{ item }}'
+    pkg: "{{ item }}"
     state: present
     update_cache: yes
   become: yes
   become_method: sudo
   with_items:
-    - linux-image-extra-$(uname -r)
+#    - linux-image-extra-$(uname -r)
     - linux-image-extra-virtual
     - apt-transport-https
     - ca-certificates
@@ -40,7 +40,7 @@
 
 - name: Install docker-ce
   apt:
-    pkg: '{{ docker-ce }}'
+    pkg: "docker-ce"
     state: present
     update_cache: yes
   become: yes
@@ -50,7 +50,7 @@
 
 - name: Create docker folder
   file:
-    path: '{{ docker.directory }}'
+    path: "{{ docker.directory }}"
     state: directory
     mode: 0775
     group: vagrant
@@ -62,8 +62,8 @@
 - name: Configuring service
   service:
     name: docker
-    enabled: "yes"
-    state: "present"
+    enabled: yes
+    state: started
 
 - name: Add vagrant user to docker group
   shell: usermod -aG docker vagrant

@@ -12,21 +12,10 @@
     - curl
     - wget
     - make
-    - mod_ssl
-    - pcre-devel
     - rsync
     - vim
-    - zip
     - unzip
-    - bzip2
-    - p7zip-full
     - git
-    - python-pip
-    - htop
-    - atop
-    - iftop
-    - mytop
-    - iotop
   tags:
     - common
 

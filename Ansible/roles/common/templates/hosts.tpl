@@ -1,2 +1,2 @@
 NETWORKING=yes
-HOSTNAME={{ ansible.vmName }}
+HOSTNAME=docker.vm

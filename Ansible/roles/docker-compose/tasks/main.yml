@@ -2,7 +2,7 @@
 
 - name: Install required packages
   apt:
-    pkg: '{{ python-setuptools }}'
+    pkg: python-setuptools
     state: present
     update_cache: yes
   become: yes
@@ -16,5 +16,5 @@
 
 - name: Installing docker compose
   pip:
-    name: docker-compose    
+    name: docker-compose
     state: present

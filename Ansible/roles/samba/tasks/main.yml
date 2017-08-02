@@ -21,6 +21,6 @@
   service:
     name: docker
     enabled: yes
-    state: present
+    state: started
   tags:
     - samba

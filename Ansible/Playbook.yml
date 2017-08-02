@@ -5,7 +5,7 @@
     - GlobalVariables.yml
   roles:
     - common
-#    - samba
-#    - docker
-#    - docker-compose
+    - samba
+    - docker
+    - docker-compose
 #    - oh-my-zsh
