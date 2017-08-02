@@ -1,0 +1,12 @@
+---
+- hosts: all
+  remote_user: vagrant
+  vars_files:
+    - GlobalVariables.yml
+  roles:
+    - common
+    - hulk-avency-com
+    - php
+    - composer
+    - docker
+    - oh-my-zsh

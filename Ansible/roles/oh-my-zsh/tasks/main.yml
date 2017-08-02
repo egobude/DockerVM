@@ -1,0 +1,78 @@
+---
+- stat: path=https://github.com/robbyrussell/oh-my-zsh.git
+  register: ohMyZshConfigured
+  tags:
+    - oh-my-zsh
+
+- name: Install zsh
+  apt: pkg={{ item }}
+  with_items:
+    - zsh
+  become: yes
+  become_method: sudo
+  when: not ohMyZshConfigured.stat.exists
+  tags:
+    - oh-my-zsh
+
+- name: Install oh-my-zsh
+  git: >
+    repo=https://github.com/robbyrussell/oh-my-zsh.git
+    dest=/home/{{ item.username }}/.oh-my-zsh
+    update=yes
+  with_items: '{{ oh_my_zsh.users }}'
+  when: not ohMyZshConfigured.stat.exists
+  become: yes
+  become_user: vagrant
+  tags:
+    - oh-my-zsh
+
+- name: Install oh-my-zsh custom plugins
+  git: >
+    repo={{ item.repo }}
+    dest={{ oh_my_zsh.custom_dir }}/plugins/{{ item.name }}
+    accept_hostkey=yes
+    update=yes
+  with_items: '{{ oh_my_zsh.custom_plugins }}'
+  become: yes
+  become_user: vagrant
+  tags:
+    - oh-my-zsh
+
+- name: Setting permissions
+  file: >
+    path=/home/{{ item.username }}/.oh-my-zsh
+    owner={{ item.username }}
+    group={{ item.username }}
+    recurse=yes
+  with_items: '{{ oh_my_zsh.users }}'
+  when: not ohMyZshConfigured.stat.exists
+  become: yes
+  become_method: sudo
+  tags:
+    - oh-my-zsh
+
+- name: Settings default shell
+  user: >
+    name={{ item.username }}
+    shell=/bin/zsh
+  with_items: '{{ oh_my_zsh.users }}'
+  when: not ohMyZshConfigured.stat.exists
+  become: yes
+  become_method: sudo
+  tags:
+    - oh-my-zsh
+
+- name: Configuring oh-my-zsh
+  template: >
+    src=zshrc.j2
+    dest=/home/{{ item.username }}/.zshrc
+    owner={{ item.username }}
+    group={{ item.username }}
+    backup=yes
+    mode=0644
+  with_items: '{{ oh_my_zsh.users }}'
+  when: not ohMyZshConfigured.stat.exists
+  become: yes
+  become_method: sudo
+  tags:
+    - oh-my-zsh

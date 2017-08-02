@@ -1,0 +1,5 @@
+---
+  - name: clean yum cache
+    shell: yum -y clean all
+    become: yes
+    become_method: sudo

@@ -1,0 +1,62 @@
+---
+- stat: path=/usr/local/bin/composer
+  register: composerFile
+
+- name: Install Composer
+  shell: curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin creates=/usr/local/bin/composer
+  when: not composerFile.stat.exists
+  become: yes
+  become_method: sudo
+  tags:
+    - composer
+
+- name: Rename composer.phar to composer
+  shell: mv /usr/local/bin/composer.phar /usr/local/bin/composer creates=/usr/local/bin/composer
+  when: not composerFile.stat.exists
+  become: yes
+  become_method: sudo
+  tags:
+    - composer
+
+- name: Make Composer executable
+  file: path=/usr/local/bin/composer mode=a+x state=file
+  when: not composerFile.stat.exists
+  become: yes
+  become_method: sudo
+  tags:
+    - composer
+
+- name: Call selfupdate for existent composer
+  shell: /usr/local/bin/composer selfupdate
+  become: yes
+  become_method: sudo
+  tags:
+    - composer
+
+- name: Install hirak/prestissim composer package
+  shell: /usr/local/bin/composer global require hirak/prestissimo
+  become: yes
+  become_method: sudo
+  tags:
+    - composer
+
+- name: Add composer.dev.avency.de to composer config
+  shell: /usr/local/bin/composer config -g repositories.composerdev composer http://composer.dev.avency.de
+  become: yes
+  become_user: vagrant
+  tags:
+    - composer
+
+- name: Disable secure http
+  shell: /usr/local/bin/composer config -g secure-http false
+  become: yes
+  become_user: vagrant
+  tags:
+    - composer
+
+- name: Add github api token to composer config
+  shell: /usr/local/bin/composer config -g github-oauth.github.com b289ab0a1ca35df506a9d7403b474e51b78e29c9
+  become: yes
+  become_user: vagrant
+  tags:
+    - composer

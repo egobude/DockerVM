@@ -1,0 +1,1 @@
+{{ docker.directory }} {{ ansible.ip }}/8(rw,async,all_squash,anonuid=33,anongid=33,insecure)

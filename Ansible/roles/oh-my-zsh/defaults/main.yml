@@ -1,0 +1,22 @@
+---
+oh_my_zsh:
+  custom_dir: /home/vagrant/.oh-my-zsh/custom
+
+  users:
+    - name: Vagrant
+      username: vagrant
+
+  theme: pygmalion
+
+  case_sensitive: "true"
+
+  # Original plugins, which are delivered with oh-my-zsh
+  plugins: "git, docker, docker-compose, history"
+
+  # Custom plugins, which are open git repositories
+  custom_plugins: []
+  # - repo: git://github.com/zsh-users/zsh-syntax-highlighting.git
+  #   name: zsh-syntax-highlighting
+
+  # The optional three formats: "mm/dd/yyyy"|"dd.mm.yyyy"|"yyyy-mm-dd"
+  history_date_format: yyyy-mm-dd
