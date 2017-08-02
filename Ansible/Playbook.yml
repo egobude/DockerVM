@@ -5,8 +5,7 @@
     - GlobalVariables.yml
   roles:
     - common
-    - hulk-avency-com
-    - php
-    - composer
-    - docker
-    - oh-my-zsh
+#    - samba
+#    - docker
+#    - docker-compose
+#    - oh-my-zsh

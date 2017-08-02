@@ -45,8 +45,7 @@ Vagrant.configure("2") do |config|
 
 	config.vm.box = "ubuntu-trusty.box"
 	config.vm.box_url = "https://cloud-images.ubuntu.com/vagrant/trusty/current/trusty-server-cloudimg-amd64-vagrant-disk1.box"
-	config.vm.network :private_network, ip: IP
-	config.vm.network :private_network, ip: IP2
+	config.vm.network :private_network, ip: IP	
 	config.ssh.forward_agent = true
 
 	#############################################################

@@ -259,7 +259,7 @@ guest ok = no
 ;   write list = root, @lpadmin
 
 [docker]
-comment = Docker Development Share
+comment = DockerVM Samba Share
 path = {{ docker.directory }}
 browsable = yes
 guest ok = yes

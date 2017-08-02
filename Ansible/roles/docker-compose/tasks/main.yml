@@ -1,0 +1,20 @@
+---
+
+- name: Install required packages
+  apt:
+    pkg: '{{ python-setuptools }}'
+    state: present
+    update_cache: yes
+  become: yes
+  become_method: sudo
+  tags:
+    - docker
+
+- name: Installing dependencies
+  easy_install:
+    name: pip
+
+- name: Installing docker compose
+  pip:
+    name: docker-compose    
+    state: present

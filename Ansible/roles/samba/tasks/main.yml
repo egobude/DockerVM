@@ -1,0 +1,26 @@
+---
+
+- name: Install samba file server
+  apt:
+    pkg: samba
+    state: present
+    update_cache: yes
+  become: yes
+  become_method: sudo
+  tags:
+    - samba
+
+- name: Configure samba server
+  template: src=smb.tpl dest=/etc/samba/smb.conf
+  become: yes
+  become_method: sudo
+  tags:
+    - samba
+
+- name: Configuring service
+  service:
+    name: docker
+    enabled: yes
+    state: present
+  tags:
+    - samba
