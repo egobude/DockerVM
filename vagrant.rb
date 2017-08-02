@@ -1,13 +1,12 @@
 module ProjectVars
 	# vhost
-	VHOST = "docker.dev"
+	VHOST = "docker.vm"
 
 	# IP Address
-	IP = "10.0.1.13"
-	IP2 = "10.0.1.15"
+	IP = "10.0.1.10"
 
 	# VM Settings
 	CPUS = "2"
-	MEMORY = "4048"
-	VM_NAME = "avency Docker Development"
+	MEMORY = "2048"
+	VM_NAME = "DockerVM"
 end

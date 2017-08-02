@@ -1,33 +1,54 @@
 ---
 
-- stat: path=/usr/bin/docker
+# @todo: Check if the path is correct for docker-ce
+- name: Check if docker is already installed
+  stat: path=/usr/bin/docker
   register: dockerConfigured
   tags:
     - docker
 
-- name: Install docker GPG key
-  shell: curl -fsSL https://get.docker.com/gpg | sudo apt-key add -
-  when: not dockerConfigured.stat.exists
+- name: Install recommended extra packages for trusty 14.04
+  apt:
+    pkg: '{{ item }}'
+    state: present
+    update_cache: yes
+  become: yes
+  become_method: sudo
+  with_items:
+    - linux-image-extra-$(uname -r)
+    - linux-image-extra-virtual
+    - apt-transport-https
+    - ca-certificates
+    - curl
+    - software-properties-common
+  tags:
+    - docker
+
+- name: Add Docker's official GPG key
+  shell: curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
   become: yes
   become_method: sudo
   tags:
     - docker
 
-- name: Install docker
-  shell: curl -sSL https://get.docker.com/ | sh
-  when: not dockerConfigured.stat.exists
+- name: Setup a stable repository
+  shell: add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
   become: yes
   become_method: sudo
   tags:
     - docker
 
-- name: Start Docker service
-  service: name=docker state=started
-  when: not dockerConfigured.stat.exists
+- name: Install docker-ce
+  apt:
+    pkg: '{{ docker-ce }}'
+    state: present
+    update_cache: yes
   become: yes
   become_method: sudo
+  tags:
+    - docker
 
-- name: create folder
+- name: Create docker folder
   file:
     path: '{{ docker.directory }}'
     state: directory
@@ -38,41 +59,15 @@
   become: yes
   become_method: sudo
 
-- name: start docker when server boots
-  shell: update-rc.d docker defaults
-  when: not dockerConfigured.stat.exists
-  become: yes
-  become_method: sudo
-  tags:
-    - docker
-
-- name: Install docker compose
-  pip: name=docker-compose
-  when: not dockerConfigured.stat.exists
-  become: yes
-  become_method: sudo
-  tags:
-    - docker
+- name: Configuring service
+  service:
+    name: docker
+    enabled: "yes"
+    state: "present"
 
 - name: Add vagrant user to docker group
   shell: usermod -aG docker vagrant
   when: not dockerConfigured.stat.exists
-  become: yes
-  become_method: sudo
-  tags:
-    - docker
-
-- name: Add docker0 bridge to iptables
-  shell: iptables -t nat -N DOCKER && iptables -t nat -A PREROUTING -m addrtype --dst-type LOCAL -j DOCKER && iptables -t nat -A PREROUTING -m addrtype --dst-type LOCAL ! --dst 127.0.0.0/8 -j DOCKER
-  when: not dockerConfigured.stat.exists
-  become: yes
-  become_method: sudo
-  tags:
-    - docker
-
-- name: Run abh1nav/dockerui:latest container
-  shell: docker run -d -p 9000:9000 -v /var/run/docker.sock:/docker.sock --name dockerui abh1nav/dockerui:latest -e="/docker.sock"
-  ignore_errors: yes
   become: yes
   become_method: sudo
   tags:

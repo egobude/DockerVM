@@ -1,20 +1,20 @@
 ---
-- name: Update packages
-  apt: upgrade=dist
-  become: yes
-  become_method: sudo
-  tags:
-    - common
 
 - name: Install common packages
   apt:
     pkg: '{{ item }}'
     state: present
+    update_cache: yes
   become: yes
   become_method: sudo
   with_items:
     - language-pack-de
     - curl
+    - wget
+    - make
+    - mod_ssl
+    - pcre-devel
+    - rsync
     - vim
     - zip
     - unzip
@@ -52,82 +52,9 @@
   tags:
     - common
 
-- name: Install nfs server
-  apt:
-    pkg: '{{ item }}'
-    state: present
-  with_items:
-    - rpcbind
-    - nfs-kernel-server
-    - portmap
-  become: yes
-  become_method: sudo
-  tags:
-    - common
-
-- name: Setup NFS server
-  template: src=exports.tpl dest=/etc/exports
-  become: yes
-  become_method: sudo
-  tags:
-    - common
-
-- name: Change the Nobody-User to vagrant in the idmapd.conf
-  lineinfile:
-    dest: /etc/idmapd.conf
-    regexp: 'Nobody-User = nobody'
-    line: 'Nobody-User = vagrant'
-  become: yes
-  become_method: sudo
-  tags:
-    - common
-
-- name: Start nfs-server when server boots
-  shell: update-rc.d nfs-kernel-server defaults
-  become: yes
-  become_method: sudo
-  tags:
-    - common
-
 - name: Change /etc/hosts
   template: src=hosts.tpl dest=/etc/hosts
   become: yes
   become_method: sudo
   tags:
     - common
-
-- name: Install samba file server
-  apt:
-    pkg: 'samba'
-    state: present
-  become: yes
-  become_method: sudo
-  tags:
-    - common
-
-- name: Setup Samba server
-  template: src=smb.tpl dest=/etc/samba/smb.conf
-  become: yes
-  become_method: sudo
-  tags:
-    - common
-
-- name: Start Samba server when server boots
-  shell: update-rc.d smbd defaults
-  become: yes
-  become_method: sudo
-  tags:
-    - common
-
-- name: Restart machine
-  shell: sleep 2 && shutdown -r now "Ansible updates triggered"
-  async: 1
-  poll: 0
-  sudo: true
-  when: selinuxEnforcing is defined and selinuxEnforcing.stdout != 'Disabled' and not isWindows
-  ignore_errors: true
-
-- name: Waiting for server to come back
-  local_action: wait_for host={{ inventory_hostname }} state=started delay=30 timeout=120
-  sudo: false
-  when: selinuxEnforcing is defined and selinuxEnforcing.stdout != 'Disabled' and not isWindows
