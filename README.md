@@ -2,6 +2,8 @@
 
 [![Build Status](https://travis-ci.org/egobude/DockerVM.svg?branch=master)](https://travis-ci.org/egobude/DockerVM)
 
+> **Notice:** This setup is currently only for mac users!
+
 ## Requirements
 
 * Homebrew - [https://brew.sh/index_de.html](https://brew.sh/index_de.html)
