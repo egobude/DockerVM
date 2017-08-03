@@ -35,7 +35,7 @@
     $ mkdir data
     $ mount_smbfs -N //guest@10.0.1.10/docker ./data
 
-### To unmount, using the following command :
+### To unmount, using the following command
 
     $ umount ./data
 
