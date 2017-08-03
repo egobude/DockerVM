@@ -8,13 +8,23 @@
   become: yes
   become_method: sudo
   tags:
-    - docker
+    - docker-compose
 
 - name: Installing dependencies
   easy_install:
     name: pip
+  become: yes
+  become_method: sudo
+  tags:
+    - docker-compose
 
 - name: Installing docker compose
   pip:
     name: docker-compose
     state: present
+  become: yes
+  become_method: sudo
+  tags:
+    - docker-compose
+  tags:
+    - docker-compose

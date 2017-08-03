@@ -8,4 +8,4 @@
     - samba
     - docker
     - docker-compose
-#    - oh-my-zsh
+    - oh-my-zsh

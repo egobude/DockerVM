@@ -19,8 +19,10 @@
 
 - name: Configuring service
   service:
-    name: docker
+    name: samba
     enabled: yes
     state: started
+  become: yes
+  become_method: sudo
   tags:
     - samba
