@@ -1,6 +1,6 @@
 # DockerVM
 
-[![Build Status](https://travis-ci.org/egobude/DockerVM.svg?branch=task%2Fbs-adjustments)](https://travis-ci.org/egobude/DockerVM)
+[![Build Status](https://travis-ci.org/egobude/DockerVM.svg?branch=master)](https://travis-ci.org/egobude/DockerVM)
 
 ## Requirements
 
