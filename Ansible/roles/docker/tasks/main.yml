@@ -1,6 +1,5 @@
 ---
 
-# @todo: Check if the path is correct for docker-ce
 - name: Check if docker is already installed
   stat: path=/usr/bin/docker
   register: dockerConfigured
@@ -15,7 +14,6 @@
   become: yes
   become_method: sudo
   with_items:
-#    - linux-image-extra-$(uname -r)
     - linux-image-extra-virtual
     - apt-transport-https
     - ca-certificates
@@ -58,12 +56,16 @@
   when: not dockerConfigured.stat.exists
   become: yes
   become_method: sudo
+  tags:
+    - docker
 
 - name: Configuring service
   service:
     name: docker
     enabled: yes
     state: started
+  tags:
+    - docker
 
 - name: Add vagrant user to docker group
   shell: usermod -aG docker vagrant

@@ -10,6 +10,6 @@ before_install:
 install:
   - pip install ansible
 script:
-  - echo localhost > inventory
-  - ansible-playbook --syntax-check -i inventory Ansible/Playbook.yml
-  - ansible-playbook -i inventory Ansible/Playbook.yml --connection=local --sudo -vvvv
+  - echo localhost > Ansible/Inventory
+  - ansible-playbook --syntax-check -i inventory Ansible/Playbook.yml --inventory-file Ansible/Inventory
+#  - ansible-playbook -i inventory Ansible/Playbook.yml --connection=local --sudo -vvvv

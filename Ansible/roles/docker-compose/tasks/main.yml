@@ -26,5 +26,3 @@
   become_method: sudo
   tags:
     - docker-compose
-  tags:
-    - docker-compose

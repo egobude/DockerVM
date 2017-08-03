@@ -1,4 +1,5 @@
 ---
+
 - stat: path=https://github.com/robbyrussell/oh-my-zsh.git
   register: ohMyZshConfigured
   tags:
