@@ -4,6 +4,7 @@
 
 ## Requirements
 
+* Homebrew - [https://brew.sh/index_de.html](https://brew.sh/index_de.html)
 * Vagrant - [https://www.vagrantup.com](https://www.vagrantup.com/)
 * Virtualbox - [https://www.virtualbox.org](https://www.virtualbox.org/)
 * Ansible - [https://www.ansible.com](https://www.ansible.com/)
