@@ -24,7 +24,7 @@
     $ git clone https://github.com/egobude/DockerVM.git
     $ cd DockerVM
 
-### Adjust VM settings
+### Adjust VM settings in vagrant.rb
 
 ```ruby
 module ProjectVars
