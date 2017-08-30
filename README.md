@@ -24,6 +24,23 @@
     $ git clone https://github.com/egobude/DockerVM.git
     $ cd DockerVM
 
+### Adjust VM settings
+
+```ruby
+module ProjectVars
+  # vhost
+  VHOST = "docker.vm"
+
+  # IP Address
+  IP = "10.0.1.10"
+
+  # VM Settings
+  CPUS = "2"
+  MEMORY = "2048"
+  VM_NAME = "DockerVM"
+end
+```
+
 ### Start the machine
 
     $ vagrant up
